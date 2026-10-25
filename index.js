@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>BLACK LISTED AI</title>
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:#03040a;color:#fff;font-family:Arial,Helvetica,sans-serif;
+  overflow-x:hidden
+}
+body:before{
+  content:"";position:fixed;inset:0;pointer-events:none;
+  background:
+    radial-gradient(circle at 80% 15%,rgba(90,50,255,.18),transparent 28%),
+    radial-gradient(circle at 20% 70%,rgba(170,30,255,.10),transparent 30%);
+  z-index:-1
+}
+
+/* NAVBAR */
+nav{
+  height:70px;border-bottom:1px solid #272344;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 7%;background:rgba(3,4,10,.85);
+  backdrop-filter:blur(15px);position:sticky;top:0;z-index:10
+}
+.brand{display:flex;align-items:center;gap:12px;font-size:20px;font-weight:800}
+.brand-icon{
+  width:40px;height:40px;border-radius:13px;
+  display:grid;place-items:center;font-size:21px;
+  background:linear-gradient(135deg,#a855f7,#2563eb);
+  box-shadow:0 0 25px #7c3aed66
+}
+.brand span{color:#a855f7}
+.links{display:flex;gap:32px}
+.links a{color:#aaa;text-decoration:none;font-size:14px}
+.links a:hover{color:#fff}
+.mode{
+  border:1px solid #754cff;background:#0b0b16;color:#fff;
+  padding:10px 17px;border-radius:25px;cursor:pointer
+}
+
+/* HERO */
+.hero{
+  min-height:570px;display:flex;align-items:center;
+  justify-content:space-between;padding:70px 7%;gap:40px
+}
+.hero-left{max-width:570px}
+.badge{
+  display:inline-block;border:1px solid #754cff;border-radius:20px;
+  padding:9px 16px;color:#d2c8ff;background:#100b22;margin-bottom:25px
+}
+h1{font-size:65px;line-height:1.02;margin-bottom:22px}
+.gradient{
+  background:linear-gradient(90deg,#c084fc,#6366f1,#38bdf8);
+  -webkit-background-clip:text;color:transparent
+}
+.hero p{color:#9d9daa;font-size:18px;line-height:1.7}
+.buttons{display:flex;gap:15px;margin-top:30px}
+.primary,.secondary{
+  padding:14px 24px;border-radius:13px;font-weight:bold;
+  cursor:pointer;font-size:15px
+}
+.primary{
+  border:0;color:#fff;
+  background:linear-gradient(90deg,#a855f7,#2563eb);
+  box-shadow:0 0 30px #7c3aed55
+}
+.secondary{
+  background:transparent;border:1px solid #6d5cff;color:white
+}
+
+/* AI VISUAL */
+.ai-visual{
+  width:400px;height:400px;position:relative;display:grid;place-items:center
+}
+.orb{
+  width:250px;height:250px;border-radius:50%;
+  background:radial-gradient(circle at 35% 30%,#d8b4fe,#7c3aed 35%,#10102c 70%);
+  box-shadow:0 0 40px #7c3aed,0 0 100px #2563eb66;
+  animation:float 4s ease-in-out infinite
+}
+.orb:before,.orb:after{
+  content:"";position:absolute;border:1px solid #9f7aea88;
+  border-radius:50%;transform:rotate(35deg)
+}
+.orb:before{width:350px;height:120px}
+.orb:after{width:120px;height:350px}
+@keyframes float{50%{transform:translateY(-15px) scale(1.03)}}
+
+/* FEATURES */
+.features{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  border-top:1px solid #24213a;border-bottom:1px solid #24213a;
+  padding:30px 7%;gap:20px
+}
+.feature{padding:10px 15px;border-right:1px solid #28263a}
+.feature:last-child{border:0}
+.feature-icon{font-size:27px;color:#a855f7;margin-bottom:10px}
+.feature h3{font-size:16px;margin-bottom:7px}
+.feature p{color:#777;font-size:13px;line-height:1.5}
+
+/* PLAYGROUND */
+.playground{
+  margin:70px auto;max-width:1100px;padding:0 25px
+}
+.section-title{text-align:center;margin-bottom:35px}
+.section-title small{color:#a855f7;letter-spacing:3px}
+.section-title h2{font-size:38px;margin-top:10px}
+.playbox{
+  border:1px solid #714cff;border-radius:25px;padding:25px;
+  background:linear-gradient(145deg,#0c0b18,#070810);
+  box-shadow:0 0 60px #512da822;
+  display:grid;grid-template-columns:1fr 1fr;gap:20px
+}
+textarea{
+  width:100%;height:190px;background:#05060c;border:1px solid #292740;
+  border-radius:15px;color:#fff;padding:17px;font-size:15px;
+  resize:none;outline:none
+}
+textarea:focus{border-color:#8b5cf6}
+.controls{display:flex;gap:10px;margin-top:12px}
+select{
+  flex:1;background:#0b0b15;border:1px solid #3b3264;
+  color:#fff;padding:12px;border-radius:10px
+}
+.generate{
+  flex:1;border:0;border-radius:10px;color:#fff;
+  background:linear-gradient(90deg,#9333ea,#2563eb);
+  cursor:pointer;font-weight:bold
+}
+.output{
+  background:#070812;border:1px solid #292740;border-radius:17px;
+  padding:20px;min-height:250px
+}
+.output-label{color:#a78bfa;font-size:12px;letter-spacing:2px}
+.output h3{margin:15px 0 10px;font-size:22px}
+.output p{color:#aaa;line-height:1.7}
+.quick{
+  display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:18px
+}
+.quick button{
+  background:#0c0c18;color:#bbb;border:1px solid #292740;
+  border-radius:9px;padding:10px;cursor:pointer
+}
+.quick button:hover{border-color:#8b5cf6;color:#fff}
+
+/* STATS */
+.stats{
+  text-align:center;padding:65px 7%;border-top:1px solid #211e36
+}
+.stats h2{font-size:36px;margin-bottom:35px}
+.stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+.stat strong{display:block;font-size:30px;color:#a855f7}
+.stat span{color:#777;font-size:13px}
+
+/* FOOTER */
+footer{
+  border-top:1px solid #272344;padding:30px 7%;
+  display:flex;justify-content:space-between;color:#777
+}
+footer b{color:#fff}
+
+/* MOBILE */
+@media(max-width:800px){
+  .links{display:none}
+  .hero{flex-direction:column;text-align:center;padding-top:50px}
+  h1{font-size:45px}
+  .hero-left{max-width:100%}
+  .buttons{justify-content:center}
+  .ai-visual{width:300px;height:300px}
+  .orb{width:190px;height:190px}
+  .features{grid-template-columns:1fr 1fr}
+  .playbox{grid-template-columns:1fr}
+  .stat-grid{grid-template-columns:1fr 1fr;gap:30px}
+  footer{flex-direction:column;gap:15px}
+}
+</style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<nav>
+  <div class="brand">
+    <div class="brand-icon">✦</div>
+    <div>BLACK <span>LISTED</span></div>
+  </div>
+
+  <div class="links">
+    <a href="#home">Home</a>
+    <a href="#features">Features</a>
+    <a href="#playground">Playground</a>
+    <a href="#about">About</a>
+  </div>
+
+  <button class="mode" onclick="toggleMode()">☼ Dark Mode</button>
+</nav>
+
+
+<!-- HERO -->
+<section class="hero" id="home">
+
+  <div class="hero-left">
+
+    <div class="badge">✦ Your Ideas × Our Intelligence</div>
+
+    <h1>
+      Welcome to<br>
+      <span class="gradient">BLACK LISTED</span>
+    </h1>
+
+    <p>
+      Not just an AI. Your creative partner, study buddy,
+      idea generator and coding assistant — all in one place.
+    </p>
+
+    <div class="buttons">
+      <button class="primary" onclick="goPlayground()">
+        Try AI Now →
+      </button>
+
+      <button class="secondary" onclick="goFeatures()">
+        Explore Features
+      </button>
+    </div>
+
+  </div>
+
+  <div class="ai-visual">
+    <div class="orb"></div>
+  </div>
+
+</section>
+
+
+<!-- FEATURES -->
+<section class="features" id="features">
+
+  <div class="feature">
+    <div class="feature-icon">⚡</div>
+    <h3>Fast & Smart</h3>
+    <p>Get instant responses and creative ideas.</p>
+  </div>
+
+  <div class="feature">
+    <div class="feature-icon">✦</div>
+    <h3>Creative Ideas</h3>
+    <p>Turn simple thoughts into amazing concepts.</p>
+  </div>
+
+  <div class="feature">
+    <div class="feature-icon">🎓</div>
+    <h3>Study Helper</h3>
+    <p>Easy explanations for school and learning.</p>
+  </div>
+
+  <div class="feature">
+    <div class="feature-icon">🛡</div>
+    <h3>Private</h3>
+    <p>Your personal playground stays in your browser.</p>
+  </div>
+
+</section>
+
+
+<!-- PLAYGROUND -->
+<section class="playground" id="playground">
+
+  <div class="section-title">
+    <small>BLACK LISTED LAB</small>
+    <h2>AI Playground</h2>
+  </div>
+
+  <div class="playbox">
+
+    <div>
+
+      <textarea id="prompt"
+        maxlength="500"
+        placeholder="Type anything...
+
+Example:
+Give me a creative idea for a school project
+or
+Explain photosynthesis in simple words"></textarea>
+
+      <div style="text-align:right;color:#666;font-size:11px;margin-top:5px">
+        <span id="count">0</span>/500
+      </div>
+
+      <div class="controls">
+
+        <select id="mode">
+          <option value="creative">✦ Creative Mode</option>
+          <option value="study">🎓 Study Mode</option>
+          <option value="code">⌨ Code Mode</option>
+          <option value="story">📖 Story Mode</option>
+        </select>
+
+        <button class="generate" onclick="generate()">
+          ➤ Generate
+        </button>
+
+      </div>
+
+    </div>
+
+
+    <div class="output">
+
+      <div class="output-label">BLACK LISTED RESPONSE</div>
+
+      <h3 id="outputTitle">
+        Your result will appear here...
+      </h3>
+
+      <p id="outputText">
+        Type your idea on the left and press Generate.
+        Try one of the quick prompts below.
+      </p>
+
+      <div class="quick">
+        <button onclick="quickPrompt('Give me a creative website idea')">
+          💡 Ideas
+        </button>
+
+        <button onclick="quickPrompt('Explain photosynthesis simply')">
+          📚 Explanation
+        </button>
+
+        <button onclick="quickPrompt('Write a short futuristic story')">
+          📖 Story
+        </button>
+
+        <button onclick="quickPrompt('Create a simple HTML button')">
+          &lt;/&gt; Code
+        </button>
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- STATS -->
+<section class="stats" id="about">
+
+  <h2>Powering a <span class="gradient">Smarter</span> Tomorrow</h2>
+
+  <div class="stat-grid">
+
+    <div class="stat">
+      <strong>∞</strong>
+      <span>Ideas Possible</span>
+    </div>
+
+    <div class="stat">
+      <strong>24/7</strong>
+      <span>Available</span>
+    </div>
+
+    <div class="stat">
+      <strong>100%</strong>
+      <span>Interactive</span>
+    </div>
+
+    <div class="stat">
+      <strong>1</strong>
+      <span>BLACK LISTED</span>
+    </div>
+
+  </div>
+
+</section>
+
+
+<footer>
+  <div><b>✦ BLACK LISTED</b> — Better Ideas. Brighter Future.</div>
+  <div>Made with ♥ for creators</div>
+</footer>
+
+
+<script>
+
+/* NAVIGATION */
+
+function goPlayground(){
+  document.getElementById("playground")
+    .scrollIntoView({behavior:"smooth"});
+}
+
+function goFeatures(){
+  document.getElementById("features")
+    .scrollIntoView({behavior:"smooth"});
+}
+
+
+/* CHARACTER COUNTER */
+
+const promptBox = document.getElementById("prompt");
+const counter = document.getElementById("count");
+
+promptBox.addEventListener("input",()=>{
+  counter.textContent = promptBox.value.length;
+});
+
+
+/* QUICK PROMPTS */
+
+function quickPrompt(text){
+  promptBox.value = text;
+  counter.textContent = text.length;
+  promptBox.focus();
+}
+
+
+/* GENERATOR */
+
+function generate(){
+
+  const text = promptBox.value.trim();
+  const mode = document.getElementById("mode").value;
+
+  const title = document.getElementById("outputTitle");
+  const output = document.getElementById("outputText");
+
+  if(!text){
+    title.textContent = "⚠ Nothing entered";
+    output.textContent = "Please type something first.";
+    return;
+  }
+
+  title.textContent = "✦ BLACK LISTED is thinking...";
+
+  output.textContent = "Generating your response...";
+
+  setTimeout(()=>{
+
+    if(mode === "study"){
+
+      title.textContent = "🎓 Study Mode";
+
+      output.textContent =
+        "Here is a simple way to understand your topic: " +
+        text +
+        ". Break the topic into small concepts, learn the key points, " +
+        "and then test yourself with questions.";
+
+    }
+
+    else if(mode === "code"){
+
+      title.textContent = "⌨ Code Mode";
+
+      output.textContent =
+        "For your coding idea — " + text +
+        " — start with a simple structure, then add styling and JavaScript " +
+        "to make it interactive.";
+
+    }
+
+    else if(mode === "story"){
+
+      title.textContent = "📖 Story Mode";
+
+      output.textContent =
+        "In a world where technology could turn imagination into reality, " +
+        "one idea changed everything: " + text +
+        ". The journey had only just begun...";
+
+    }
+
+    else{
+
+      title.textContent = "✦ Creative Concept";
+
+      output.textContent =
+        "BLACK LISTED transformed your idea — \"" +
+        text +
+        "\" — into a creative concept. " +
+        "Imagine combining futuristic visuals, interactive animations, " +
+        "smart tools and an unforgettable user experience.";
+
+    }
+
+  },700);
+
+}
+
+
+/* DARK / LIGHT MODE */
+
+let light=false;
+
+function toggleMode(){
+
+  light=!light;
+
+  if(light){
+
+    document.body.style.background="#f4f4f7";
+    document.body.style.color="#111";
+
+    document.querySelector(".mode").textContent="☾ Light Mode";
+
+  }else{
+
+    document.body.style.background="#03040a";
+    document.body.style.color="#fff";
+
+    document.querySelector(".mode").textContent="☼ Dark Mode";
+
+  }
+
+}
+
+</script>
+
+</body>
+        </html>
